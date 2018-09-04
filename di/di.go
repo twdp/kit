@@ -86,7 +86,7 @@ func (c *Container) inject(obj interface{}) {
 		if dependency != nil {
 			reflect.ValueOf(obj).Elem().Field(i).Set(reflect.ValueOf(dependency))
 		} else if required {
-			panic(fmt.Sprintf("Colud not autowire field: %s", inject))
+			panic(fmt.Sprintf("Colud not inject field: %s", inject))
 		}
 	}
 }
