@@ -12,18 +12,23 @@ type Dependency interface {
 
 // Container contains dependencies by name.
 type Container struct {
+	allowCover bool
 	dependencies map[string]interface{}
 }
 
 // New creates new Container instance.
 func New() *Container {
 	return &Container{
+		allowCover: false,
 		dependencies: make(map[string]interface{}),
 	}
 }
 
 // Provide registers a dependency.
 func (c *Container) Provide(name string, dependency interface{}) {
+	if _, ok := c.dependencies[name]; ok && !c.allowCover {
+		panic(fmt.Sprintf("provider not allow cover. name: %s", name))
+	}
 	c.dependencies[name] = dependency
 }
 
